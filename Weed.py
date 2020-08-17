@@ -1,11 +1,21 @@
 #%%
+from twilio.rest import Client
 import sys
 from datetime import datetime
 import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
 
+account_sid = 'ACdf779c87eb69f16a893c436695c4779f'
+auth_token = '7301f66dcd1ed9db550f1e1434fa2274'
+client = Client(account_sid, auth_token)
+
 datefin = []
+cashfin = []
+
+def numberer(x): 
+	for i in x:
+		cashfin.append(int(i))
 
 def dater(x):
 	for dt in x:
@@ -47,9 +57,11 @@ cash = []
 
 
 
+
 if ini == "1":
 	wcalc()
 	dater(date)
+	numberer(cash)
 else:
 	pass
 
@@ -58,12 +70,22 @@ print(cash)
 #%%
 
 print(datefin)
+print(cashfin)
 
-plt.plot_date(datefin, cash, marker='o', color='mediumvioletred')
+plt.figure(figsize=(15,15))
+plt.plot_date(datefin, cashfin, marker='o', linestyle = '-', color='mediumvioletred')
 plt.show()
 
-# %%
-# Create figure and plot space
 
+
+# %%
+message = client.messages \
+    .create(
+         body='I love Makayla',
+         from_='+19362182353',
+         to='+17277440419'
+     )
+
+print(message.sid)
 
 # %%
