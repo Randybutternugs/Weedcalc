@@ -10,7 +10,7 @@ import seaborn as sns
 
 app = Flask(__name__)
 
-@app.route('/sms', methods=['POST'])
+@app.route('sms', methods=['POST'])
 def sms():
 	number = request.form['From']
 	message_body = request.form['Body']
