@@ -1,6 +1,6 @@
 #%%
 from flask import Flask, request
-from twilio import twiml
+from twilio.twiml.messaging_response import Message, MessagingResponse
 from twilio.rest import Client
 import sys
 
@@ -8,20 +8,6 @@ from datetime import datetime
 import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
-
-app = Flask(__name__)
-
-@app.route('/sms', methods=['POST'])
-def sms():
-	number = request.form['From']
-	message_body = request.form['Body']
-
-	resp = twiml.Response()
-	resp.message('Hello {}, you said: {}'.format(number, message_body))
-	return str(resp)
-
-if __name__ == '__main__':
-	app.run()
 
 account_sid = 'ACdf779c87eb69f16a893c436695c4779f'
 auth_token = '7301f66dcd1ed9db550f1e1434fa2274'
@@ -83,8 +69,24 @@ def test():
 	date.extend([fir, sec, thi, fou, fif])
 	cash.extend([firc, secc, thic, fouc, fifc])
 
+app = Flask(__name__)
+
+@app.route('/sms', methods=['POST'])
+def sms():
+	number = "My Lovely Makayla"
+	message_body = request.form['Body']
+
+	resp = MessagingResponse()
+	resp.message('Hello {}, you said: {}'.format(number, message_body))
+	return str(resp)
+
+if __name__ == '__main__':
+	app.run()
+
+
+
 #%%
-ini = input("Welcome to 'Weed'Calculator! /n Type 1 To Begin: ")
+ini = input("Welcome to 'Weed' Calculator! | Type 1 To Begin: ")
 
 if ini == "1":
 	wcalc()
