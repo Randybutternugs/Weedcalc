@@ -82,7 +82,7 @@ def graph():
 	plt.savefig('chart.png')
 
 def move():
-	shutil.move('chart.png', 'static\chart.png')
+	shutil.move('chart.png', "static\chart.png")
 
 
 @app.route("/", methods=['GET'])
@@ -165,7 +165,7 @@ plt.savefig('chart.png')
 
 
 
- # %%
+   # %%
 print(date)
 print(cash)
 # %%
