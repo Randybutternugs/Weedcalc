@@ -169,7 +169,7 @@ plt.savefig('chart.png')
 
 
 
- # %%
+   # %%
 print(date)
 print(cash)
 # %%
