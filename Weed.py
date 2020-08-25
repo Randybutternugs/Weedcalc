@@ -82,7 +82,7 @@ def graph():
 	plt.savefig('chart.png')
 
 def move():
-	shutil.move('chart.png', 'static\chart.png')
+	shutil.move('chart.png', "static\chart.png")
 
 
 @app.route("/", methods=['GET'])
@@ -96,9 +96,13 @@ def sms():
 	msg = resp.message()
 	responded = False
 
+##################################################################################
+########### CHANGE msg.media TO INCLUDE UPDATED NGROK FORWARDING
+##################################################################################
+
 	if 'show' in incoming_msg:
 		msg.body("Available")
-		msg.media('http://ad4b7cb2ae5a.ngrok.io/static/chart.png')
+		msg.media('http://7c79dbe462fd.ngrok.io/static/chart.png')
 		responded = True
 		return str(resp)
 
