@@ -19,66 +19,43 @@ account_sid = 'ACdf779c87eb69f16a893c436695c4779f'
 auth_token = '7301f66dcd1ed9db550f1e1434fa2274'
 client = Client(account_sid, auth_token)
 
-date = []
-cash = []
+
+date = ['7/17/20', '7/19/20', '7/28/20', '8/3/20', '8/6/20']
+
+cash = ['90', '107', '126', '100', '169']
+
 datefin = []
+
 cashfin = []
 
-def numberer(x): 
-	for i in x:
-		cashfin.append(int(i))
+dat = {
 
-def dater(x):
-	for dt in x:
-		datefin.append(datetime.strptime(dt, '%m/%d/%y'))
+}
+
+def conv():
+	i = 0
+	j = 0			
+							
+	while i <= (len(date) - 1):	
+				
+		datefin.append(datetime.strptime(date[j], '%m/%d/%y'))
+		
+		cashfin.append(int(cash[j]))
+		
+		dat.update( {datefin[j] : cashfin[j]} )
+		
+		j += 1
+		i += 1
+		print (i)
 
 
-def wcalc():
-
-	year = input("What Year Is It? (YYYY)")
-
-	fir = input("First date out of 5: MM/DD")
-	fir = fir + "/" + year[-2:]
-	firc = input("Amount Made: ")
-
-	sec = input("Second date out of 5: MM/DD")
-	sec = sec + "/" + year[-2:]
-	secc = input("Amount Made: ")
-
-	thi = input("Third date out of 5: MM/DD")
-	thi = thi + "/" + year[-2:]
-	thic = input("Amount Made: ")
-
-	fou = input("Fourth date out of 5: MM/DD")
-	fou = fou + "/" + year[-2:]
-	fouc = input("Amount Made: ")
-
-	fif = input("Fifth date out of 5: MM/DD")
-	fif = fif + "/" + year[-2:]
-	fifc = input("Amount Made: ")
-
-	date.extend([fir, sec, thi, fou, fif])
-	cash.extend([firc, secc, thic, fouc, fifc])
-
-def test():
-	fir = '7/17/20'
-	firc = '90'
-	sec = '7/19/20'
-	secc = '107'
-	thi = '7/28/20'
-	thic = '126'
-	fou = '8/3/20'
-	fouc = '100'
-	fif = '8/6/20'
-	fifc = '169'
-
-	date.extend([fir, sec, thi, fou, fif])
-	cash.extend([firc, secc, thic, fouc, fifc])
+	lists = sorted(dat.items())
+	x, y = zip(*lists)
 
 
 def graph():
-	plt.figure(figsize=(15,15))
-	plt.plot_date(datefin, cashfin, marker='o', linestyle = '-', color='mediumvioletred')
+	plt.figure(figsize=(15,10))
+	plt.plot_date(x, y, marker='o', linestyle = '-', color='mediumvioletred')
 	plt.savefig('chart.png')
 
 def move():
@@ -118,8 +95,7 @@ def sms():
 	
 	if 'add' in incoming_msg:
 		msg.body("All set!")
-		dater(date)
-		numberer(cash)
+		conv()
 		graph()
 		return str(resp)
 
