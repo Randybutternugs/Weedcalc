@@ -8,7 +8,6 @@ from flask import render_template
 from twilio.twiml.messaging_response import Message, MessagingResponse
 from twilio.rest import Client
 import sys
-
 from datetime import datetime
 import numpy as np
 import matplotlib.pyplot as plt
@@ -140,28 +139,3 @@ def sms():
 
 if __name__ == '__main__':
 	app.run()
-
-
-
-#%%
-
-print(datefin)
-print(cashfin)
-
-plt.figure(figsize=(10,10))
-plt.plot_date(datefin, cashfin, marker='o', linestyle = '-', color='mediumvioletred')
-plt.savefig('chart.png')
-
-
-
-   # %%
-print(date)
-print(cash)
-# %%
-print(cashfin)
-print(datefin)
-# %%
-
-
-print()
-# %%
