@@ -19,9 +19,11 @@ account_sid = 'ACdf779c87eb69f16a893c436695c4779f'
 auth_token = '7301f66dcd1ed9db550f1e1434fa2274'
 client = Client(account_sid, auth_token)
 
-date = ['7/17/20', '7/19/20', '7/28/20', '8/3/20', '8/6/20']
+ds = open('datesave',) 
+date = json.load(ds)
 
-cash = ['90', '107', '126', '100', '169']
+cs = open('cashsave',) 
+cash = json.load(cs)
 
 datefin = []
 
@@ -127,6 +129,12 @@ def sms():
 		frown = "):"
 		msg.body(frown)
 		responded = True
+	
+	if 'reset data' in incoming_msg:
+		shutil.copy('saves\cashsave', "cashsave")
+		shutil.copy('saves\datesave', "datesave")
+		msg.body("Plot data reset!")
+		responded = True
 
 	if not responded:
 		pa = 'Possible '
@@ -139,3 +147,5 @@ def sms():
 
 if __name__ == '__main__':
 	app.run()
+
+ # %%
