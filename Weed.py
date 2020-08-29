@@ -93,6 +93,11 @@ def sms():
 		msg.body("Date Recorded. ")
 		date.append(incoming_msg)
 		return str(resp)
+	
+	if 'today' in incoming_msg:
+		msg.body("Date Recorded. ")
+		date.append(datetime.today().strftime('%m/%d/%y'))
+		return str(resp)
 
 	if '$' in incoming_msg:
 		msg.body("Amount Recorded. ")
@@ -118,14 +123,20 @@ def sms():
 	if 'thank' in incoming_msg:
 		msg.body("You're Welcome!")
 		responded = True
+	
+	if 'fuck' in incoming_msg:
+		frown = "):"
+		msg.body(frown)
+		responded = True
 
 	if not responded:
 		pa = 'Possible '
 		rt = 'Error'
 		msg.body(pa + rt)
 	
-	return str(resp)
 
+
+	return str(resp)
 
 if __name__ == '__main__':
 	app.run()
@@ -152,5 +163,5 @@ print(datefin)
 # %%
 
 
-
+print()
 # %%
