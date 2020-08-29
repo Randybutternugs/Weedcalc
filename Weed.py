@@ -1,7 +1,8 @@
 #%%
 import os
+import time
 import shutil
-import pickle
+import json
 from flask import Flask, request
 from flask import render_template
 from twilio.twiml.messaging_response import Message, MessagingResponse
@@ -19,7 +20,6 @@ account_sid = 'ACdf779c87eb69f16a893c436695c4779f'
 auth_token = '7301f66dcd1ed9db550f1e1434fa2274'
 client = Client(account_sid, auth_token)
 
-
 date = ['7/17/20', '7/19/20', '7/28/20', '8/3/20', '8/6/20']
 
 cash = ['90', '107', '126', '100', '169']
@@ -31,6 +31,13 @@ cashfin = []
 dat = {
 
 }
+
+rootDir = './'
+
+def toJson(path, name, data):
+	filePathName = './' + path + '/' + name
+	with open(filePathName, 'w') as fp:
+		json.dump(data, fp)
 
 def conv():
 	i = 0
@@ -49,11 +56,9 @@ def conv():
 		print (i)
 
 
+def graph():
 	lists = sorted(dat.items())
 	x, y = zip(*lists)
-
-
-def graph():
 	plt.figure(figsize=(15,10))
 	plt.plot_date(x, y, marker='o', linestyle = '-', color='mediumvioletred')
 	plt.savefig('chart.png')
@@ -69,6 +74,7 @@ def hello():
 @app.route('/sms', methods=['POST'])
 def sms():
 	incoming_msg = request.values.get('Body').lower()
+	incoming_int_msg = request.values.get('Body')[1:]
 	resp = MessagingResponse()
 	msg = resp.message()
 	responded = False
@@ -78,8 +84,8 @@ def sms():
 ##################################################################################
 
 	if 'show' in incoming_msg:
-		msg.body("Available")
-		msg.media('http://7c79dbe462fd.ngrok.io/static/chart.png')
+		msg.body("Visualization of Earnings")
+		msg.media('http://ee41a178a07b.ngrok.io/static/chart.png')
 		responded = True
 		return str(resp)
 
@@ -88,26 +94,34 @@ def sms():
 		date.append(incoming_msg)
 		return str(resp)
 
-	if '190' in incoming_msg:
+	if '$' in incoming_msg:
 		msg.body("Amount Recorded. ")
-		cash.append(incoming_msg)
+		cash.append(incoming_int_msg)
 		return str(resp)
 	
 	if 'add' in incoming_msg:
-		msg.body("All set!")
+		msg.body("Changes Saved! ")
+		toJson(rootDir, 'datesave', date)
+		toJson(rootDir, 'cashsave', cash)
 		conv()
 		graph()
-		return str(resp)
-
-	if 'push' in incoming_msg:
-		msg.body("Changes Saved! ")
+		time.sleep(2)
 		move()
 		return str(resp)
 
 
+	if 'creator' in incoming_msg:
+		msg.body("This Bot was created with love by Adonis Alexis in August of 2020. This Bot is written in python and predominantly utilizes Twilio API and Flask framework to function. For more details, ask the guy showing this to you...")
+		responded = True
+		return str(resp)
+
+	if 'thank' in incoming_msg:
+		msg.body("You're Welcome!")
+		responded = True
+
 	if not responded:
-		pa = 'Not '
-		rt = 'Available'
+		pa = 'Possible '
+		rt = 'Error'
 		msg.body(pa + rt)
 	
 	return str(resp)
@@ -118,22 +132,6 @@ if __name__ == '__main__':
 
 
 
-#%%
-ini = input("Welcome to 'Weed' Calculator! | Type 1 To Begin: ")
-
-if ini == "1":
-	wcalc()
-	dater(date)
-	numberer(cash)
-elif ini.upper() == "TEST":
-	test()
-	dater(date)
-	numberer(cash)
-else:
-	pass
-
-print(date)
-print(cash)
 #%%
 
 print(datefin)
@@ -148,4 +146,11 @@ plt.savefig('chart.png')
    # %%
 print(date)
 print(cash)
+# %%
+print(cashfin)
+print(datefin)
+# %%
+
+
+
 # %%
