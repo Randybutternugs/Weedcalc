@@ -86,7 +86,7 @@ def sms():
 
 	if 'show' in incoming_msg:
 		msg.body("Visualization of Earnings")
-		msg.media('http://ee41a178a07b.ngrok.io/static/chart.png')
+		msg.media('http://e4eab3e774d3.ngrok.io/static/chart.png')
 		responded = True
 		return str(resp)
 
@@ -135,6 +135,10 @@ def sms():
 		shutil.copy('saves\datesave', "datesave")
 		msg.body("Plot data reset!")
 		responded = True
+
+	if 'command' in incoming_msg:
+		msg.body("COMMAND LIST: \n\n Send dates: \n (Format: mm/dd/yy or use 'today') \n\n Send Amounts: \n (Preface number with $) \n\n Add: \n ('add' Saves date and Amount sent)\n\n Show: \n ('Show' displays Earnings Graph)\n\n Reset Data: \n (COMPLETE RESET) \n\n Remember to say thank you.")
+		return str(resp)
 
 	if not responded:
 		pa = 'Possible '
