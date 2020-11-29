@@ -1,17 +1,19 @@
 #%%
 import os
+import sys
 import time
-import shutil
 import json
+import shutil
+import numpy as np
+import seaborn as sns
+from splinter import Browser
 from flask import Flask, request
 from flask import render_template
 from twilio.twiml.messaging_response import Message, MessagingResponse
 from twilio.rest import Client
-import sys
 from datetime import datetime
-import numpy as np
 import matplotlib.pyplot as plt
-import seaborn as sns
+
 
 app = Flask(__name__)
 
@@ -125,11 +127,6 @@ def sms():
 		msg.body("You're Welcome!")
 		responded = True
 	
-	if 'fuck' in incoming_msg:
-		frown = "):"
-		msg.body(frown)
-		responded = True
-	
 	if 'reset data' in incoming_msg:
 		shutil.copy('saves\cashsave', "cashsave")
 		shutil.copy('saves\datesave', "datesave")
@@ -141,9 +138,7 @@ def sms():
 		return str(resp)
 
 	if not responded:
-		pa = 'Possible '
-		rt = 'Error'
-		msg.body(pa + rt)
+		msg.body('Possible Error')
 	
 
 
